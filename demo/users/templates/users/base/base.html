@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style type="text/css">
+        .sidenav {
+            height:100%;
+            width:160px;
+            position:fixed;
+            z-index: 1;
+            top:0;
+            left:0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size:25px;
+            color: #818181;
+            display:block;
+        }
+        .sidenav a:hover{
+            color:#f1f1f1; 
+        }
+        .main{
+            margin-left: 160px;
+            padding: 0px 10px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+</head>
+<body>
+    <div class="sidenav">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'stock_data' %}">View Stock Data</a>
+        <a href="{% url 'buy_stock' %}">Buy Stocks</a>
+        <a href="{% url 'sell_stock' %}">Sell Stocks</a>
+        <a href="{% url 'transaction_history' %}">Portfolio</a>
+        <a href="{% url 'stock_graph_symbol' symbol='AAPL' days=8 %}">View Stock Graph</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    <div id="content" name="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

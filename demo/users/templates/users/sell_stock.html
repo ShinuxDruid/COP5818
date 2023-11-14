@@ -1,0 +1,26 @@
+{% extends 'users/base/base.html' %}
+
+{% block title %}Sell Stock - My Website{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <h1>Sell Stock</h1>
+
+        {% if user_holdings %}
+            <p>Your current holdings:</p>
+            <ul>
+                {% for holding in user_holdings %}
+                    <li>{{ holding.symbol }} ({{ holding.call_type }}): ${{ holding.amount }} </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You currently have no holdings.</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'sell_stock' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sell Stock</button>
+        </form>
+    </div>
+{% endblock %}

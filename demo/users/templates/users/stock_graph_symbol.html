@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <style type="text/css">
+    .sidenav {
+        height:100%;
+        width:160px;
+        position:fixed;
+        z-index: 1;
+        top:0;
+        left:0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+    .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size:25px;
+        color: #818181;
+        display:block;
+    }
+    .sidenav a:hover{
+        color:#f1f1f1; 
+    }
+    .main{
+        margin-left: 160px;
+        padding: 0px 10px;
+    }
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Graph</title>
+
+<!-- Include Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- Include Moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+</head>
+
+
+<body style="margin-left: 170px;">
+
+  <div class="sidenav">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'stock_data' %}">View Stock Data</a>
+    <a href="{% url 'buy_stock' %}">Buy Stocks</a>
+    <a href="{% url 'sell_stock' %}">Sell Stocks</a>
+    <a href="{% url 'transaction_history' %}">Portfolio</a>
+    <a href="{% url 'stock_graph_symbol' symbol='AAPL' days=8 %}">View Stock Graph</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+    <form method="post" action="{% url 'stock_graph_symbol' symbol=symbol days=days %}">
+        {% csrf_token %}
+        {{ form.symbol }}
+        {{ form.days }}
+        <button type="submit">Update Graph</button>
+    </form>
+
+    <!-- Add a div element for the chart -->
+    <div id="stockChart" style="width: 800px; height: 400px;"></div>
+
+    <script>
+        // Parse JSON data in JavaScript
+        var dates = JSON.parse('{{ dates_json|escapejs }}');
+        var prices = JSON.parse('{{ prices_json|escapejs }}');
+
+        // Convert dates to moment objects
+        var momentDates = dates.map(function(date) {
+        return moment(date, 'YYYY-MM-DD').toDate();
+        });
+
+        // Create data trace for Plotly
+        var trace = {
+        x: momentDates,
+        y: prices,
+        mode: 'lines',
+        type: 'scatter',
+        line: {color: 'rgba(75, 192, 192, 1)'}
+        };
+
+        // Layout for the Plotly chart
+        var layout = {
+        xaxis: {
+            type: 'date',
+            tickformat: '%b %d',
+            title: 'Date'
+        },
+        yaxis: {
+            title: 'Stock Price'
+        },
+        title: 'Stock Prices Over Time'
+        };
+
+        // Create the Plotly chart
+        Plotly.newPlot('stockChart', [trace], layout);
+    </script>
+</body>
+</html>

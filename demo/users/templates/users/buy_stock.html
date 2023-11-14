@@ -1,0 +1,15 @@
+{% extends 'users/base/base.html' %}
+
+{% block title %}Buy Stock - My Website{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <h1>Buy Stock</h1>
+        <form method="post" action="{% url 'buy_stock' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Buy Stock</button>
+        </form>
+        <p><a href="{% url 'home' %}">Home</a></p>
+    </div>
+{% endblock %}

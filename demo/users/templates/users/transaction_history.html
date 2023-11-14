@@ -1,0 +1,61 @@
+{% extends 'users/base/base.html' %}
+
+{% block title %}Transaction History - My Website{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <h1>Transaction History</h1>
+
+        {% for summary in transactions_summary %}
+            {% if summary.symbol %}
+                <h2>{{ summary.symbol }} Positions</h2>
+                {% if summary.total_long_amount > 0 %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Identifier</th>
+                                <th>Total Amount</th>
+                                <th>Option</th>
+                                <th>Shares</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ summary.symbol }}</td>
+                                <td>{{ summary.total_long_amount }}</td>
+                                <td>Long</td>
+                                <td>{{summary.total_long_shares|floatformat:3}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No long positions found for {{ summary.symbol }}.</p>
+                {% endif %}
+                {% if summary.total_short_amount > 0 %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Identifier</th>
+                                <th>Total Amount</th>
+                                <th>Option</th>
+                                <th>Shares</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ summary.symbol }}</td>
+                                <td>{{ summary.total_short_amount }}</td>
+                                <td>Short</td>
+                                <td>{{ summary.total_short_shares|floatformat:3 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No short positions found for {{ summary.symbol }}.</p>
+                {% endif %}
+            {% else %}
+                <p>No Positions on record.</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

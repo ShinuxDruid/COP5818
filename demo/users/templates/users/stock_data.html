@@ -1,0 +1,15 @@
+{% extends 'users/base/base.html' %}
+
+{% block title %}Stock Information - My Website{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <h1>Stock Information for {{ symbol }}</h1>
+        <p>Date and Time: {{ current_date }}</p>
+        <p>High: {{ high }}</p>
+        <p>Low: {{ low }}</p>
+        <p>Open: {{ open }}</p>
+        <p>Close: {{ close }}</p>
+        <p>Volume: {{ volume }}</p>
+    </div>
+{% endblock %}
