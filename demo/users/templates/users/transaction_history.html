@@ -29,7 +29,7 @@
                         </tbody>
                     </table>
                 {% else %}
-                    <p>No long positions found for {{ summary.symbol }}.</p>
+        
                 {% endif %}
                 {% if summary.total_short_amount > 0 %}
                     <table>
@@ -51,7 +51,7 @@
                         </tbody>
                     </table>
                 {% else %}
-                    <p>No short positions found for {{ summary.symbol }}.</p>
+        
                 {% endif %}
             {% else %}
                 <p>No Positions on record.</p>
