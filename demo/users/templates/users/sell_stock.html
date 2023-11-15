@@ -10,7 +10,7 @@
             <p>Your current holdings:</p>
             <ul>
                 {% for holding in user_holdings %}
-                    <li>{{ holding.symbol }} ({{ holding.call_type }}): ${{ holding.amount }} </li>
+                    <li>{{ holding.symbol }} ({{ holding.call_type }}): ${{ holding.amount }} , {{holding.shares}} Owned Shares</li>
                 {% endfor %}
             </ul>
         {% else %}
