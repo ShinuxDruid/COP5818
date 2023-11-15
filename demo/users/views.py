@@ -167,7 +167,7 @@ def transaction_history(request):
 
 @login_required
 def sell_stock(request):
-    user_holdings = Transaction.objects.filter(user=request.user).values('symbol', 'amount', 'call_type')
+    user_holdings = Transaction.objects.filter(user=request.user).values('symbol', 'amount', 'call_type','shares')
 
     if request.method == 'POST':
         form = StockSellForm(request.POST)
